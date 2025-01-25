@@ -1,3 +1,8 @@
+# Git Bash Automation
+A script that automatically runs the initial setup for GitHub.
+If you create a lot of projects and are tired of typing the same code all the time to push to your repo, you can easily run this script.
+It's currently set up to use SSH for it.
+
 ## Installation
 To use this script as a native command in your terminal:
 
