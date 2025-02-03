@@ -1,7 +1,17 @@
 # Git Bash Automation
-A script that automatically runs the initial setup for GitHub.
-If you create a lot of projects and are tired of typing the same code all the time to push to your repo, you can easily run this script.
-It's currently set up to use SSH for it.
+
+A script that automates the initial setup for GitHub repositories.
+If you create a lot of projects and are tired of typing the same commands to push to your repository, this script makes the process effortless.
+
+## Repository
+[Git Bash Automation](https://github.com/jfjoao12/git-bash-automation)
+
+## Features
+- Initializes a Git repository.
+- Creates and commits a README.md file.
+- Adds a remote origin and pushes the initial commit.
+- Supports configuration mode to store a GitHub username.
+- Can be used as a native command in your terminal.
 
 ## Installation
 To use this script as a native command in your terminal:
@@ -9,7 +19,7 @@ To use this script as a native command in your terminal:
 1. **Download the script**
    ```bash
    curl -o git-init-automation.sh https://raw.githubusercontent.com/jfjoao12/git-bash-automation/main/git-init-automation.sh
-   ```
+
 2. **Make it executable**
    ```bash
    chmod +x git-init-automation.sh
