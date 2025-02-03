@@ -34,7 +34,7 @@ To use this script as a native command in your terminal:
    ```
 
 ## TO-DO:
-- [ ] Change the command and file name to git-init
 - [ ] Add functionality to allow the user to choose between HTTPS and SSH
 - [ ] Improve error handling
+- [ ] Improve code and implement undone features
 
