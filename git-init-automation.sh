@@ -4,12 +4,10 @@ foldername=$(basename "$PWD" | tr ' ' '-')
 default_command() {
     read -p "Enter commit message (default: Initial Commit): " comment
 
-    # Set default commit message if none provided
     if [ -z "$comment" ]; then
         comment="Initial Commit"
     fi
 
-    # Create README.md and initialize Git repository
     echo "# $foldername" > README.md
     git init
     git add README.md
@@ -19,6 +17,33 @@ default_command() {
     git push -u origin main
 }
 
+git_comment_command(){
+    local comment="$1"
+
+    if [ -z "$comment" ]; then
+        echo "Error: No commit message provided. Use -c \"Your commit message\""
+        exit 1
+    fi
+
+    echo "# $foldername" > README.md
+    git init
+    git add README.md
+    git commit -m "$comment"
+    git remote add origin https://github.com/jfjoao12/$foldername.git
+    git branch -M main
+    git push -u origin main
+}
+
+
+git_init_default () {
+    default_command
+}
+
+git_init_configured() {
+    echo "Running command x"
+}
+
+
 configuration_mode () {
     echo -n "Please enter your username: "
     read username
@@ -26,7 +51,6 @@ configuration_mode () {
 
 create_config_file () {
     config_file="config.txt"
-
 
     if [[ ! -f $config_file ]]; then
         echo "Configuration file not found. Creating new one..."
@@ -59,19 +83,17 @@ check_username () {
     fi
 }
 
-git_init_default () {
-    default_command
-}
 
-git_init_configured() {
-    echo "Running default command y"
-}
 
 if [[ -n $1 ]]; then
     case $1 in
     "-c")
-        comment="$2"
-        echo "Comment added: $comment"
+        if [[ -n $2 ]]; then
+            git_comment_command "$2"
+        else
+            echo "Error: No commit message provided. Use -c \"Your commit message\""
+            exit 1
+        fi
     ;;
     "--config")
         echo -e "\033[0;32m ###### Entering configuration mode ##### \033[0m"
@@ -85,22 +107,3 @@ if [[ -n $1 ]]; then
 else
     check_username
 fi
-
-
-
-# # Prompt for commit message
-# read -p "Enter commit message (default: Initial Commit): " comment
-
-# # Set default commit message if none provided
-# if [ -z "$comment" ]; then
-#     comment="Initial Commit"
-# fi
-
-# # Create README.md and initialize Git repository
-# echo "# $foldername" > README.md
-# git init
-# git add README.md
-# git commit -m "$comment"
-# git remote add origin git@github.com:jfjoao12/$foldername.git
-# git branch -M main
-# git push -u origin main

@@ -22,11 +22,11 @@ To use this script as a native command in your terminal:
    ```
 2. **Make it executable**
    ```bash
-   chmod +x git-init-automation.sh
+   sudo chmod +x git-init-automation.sh
    ```
 3. **Move it to a directory in your `PATH`**
    ```bash
-   mv git-init-automation.sh /usr/local/bin/git-init
+   sudo mv git-init-automation.sh /usr/local/bin/git-init
    ```
 4. **Now, you can run it from any project folder!**
    ```bash
@@ -36,5 +36,5 @@ To use this script as a native command in your terminal:
 ## TO-DO:
 - [ ] Add functionality to allow the user to choose between HTTPS and SSH
 - [ ] Improve error handling
-- [ ] Improve code and implement undone features
+- [ ] Improve code (remove code duplication)
 
