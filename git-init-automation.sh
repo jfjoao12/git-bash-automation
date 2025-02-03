@@ -7,7 +7,7 @@ if [[ -f $config_file ]]; then
     source $config_file
 fi
 
-# Prompt user for username if not set
+# Prompt the user for username if can't find config file
 if [[ -z "$username" ]]; then
     echo -n "Please enter your GitHub username: "
     read username
@@ -15,6 +15,7 @@ if [[ -z "$username" ]]; then
     echo "Configuration saved!"
 fi
 
+# Default-command if no -c
 default_command() {
     read -p "Enter commit message (default: Initial Commit): " comment
 
@@ -31,6 +32,7 @@ default_command() {
     git push -u origin main
 }
 
+# Command if -c is specified
 git_comment_command() {
     local comment="$1"
 
@@ -52,6 +54,7 @@ git_init_default() {
     default_command
 }
 
+# Affirm the user
 git_init_configured() {
     echo "Running command for configured user: $username"
     default_command
@@ -81,7 +84,6 @@ check_username() {
     fi
 }
 
-# Process command-line arguments
 if [[ -n $1 ]]; then
     case $1 in
     "-c")
