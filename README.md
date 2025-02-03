@@ -19,7 +19,7 @@ To use this script as a native command in your terminal:
 1. **Download the script**
    ```bash
    curl -o git-init-automation.sh https://raw.githubusercontent.com/jfjoao12/git-bash-automation/main/git-init-automation.sh
-
+   ```
 2. **Make it executable**
    ```bash
    chmod +x git-init-automation.sh
