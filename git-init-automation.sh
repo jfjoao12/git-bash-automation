@@ -1,5 +1,19 @@
 #!/bin/bash
 foldername=$(basename "$PWD" | tr ' ' '-')
+config_file="config.txt"
+
+# Load username from config file
+if [[ -f $config_file ]]; then
+    source $config_file
+fi
+
+# Prompt user for username if not set
+if [[ -z "$username" ]]; then
+    echo -n "Please enter your GitHub username: "
+    read username
+    echo "username=$username" > $config_file
+    echo "Configuration saved!"
+fi
 
 default_command() {
     read -p "Enter commit message (default: Initial Commit): " comment
@@ -12,12 +26,12 @@ default_command() {
     git init
     git add README.md
     git commit -m "$comment"
-    git remote add origin https://github.com/jfjoao12/$foldername.git
+    git remote add origin "https://github.com/$username/$foldername.git"
     git branch -M main
     git push -u origin main
 }
 
-git_comment_command(){
+git_comment_command() {
     local comment="$1"
 
     if [ -z "$comment" ]; then
@@ -29,53 +43,37 @@ git_comment_command(){
     git init
     git add README.md
     git commit -m "$comment"
-    git remote add origin https://github.com/jfjoao12/$foldername.git
+    git remote add origin "https://github.com/$username/$foldername.git"
     git branch -M main
     git push -u origin main
 }
 
-
-git_init_default () {
+git_init_default() {
     default_command
 }
 
 git_init_configured() {
-    echo "Running command x"
+    echo "Running command for configured user: $username"
+    default_command
 }
 
-
-configuration_mode () {
-    echo -n "Please enter your username: "
+configuration_mode() {
+    echo -n "Please enter your GitHub username: "
     read username
-}
-
-create_config_file () {
-    config_file="config.txt"
-
-    if [[ ! -f $config_file ]]; then
-        echo "Configuration file not found. Creating new one..."
-        touch $config_file
-    fi
-
-
-    echo "Saving username to $config_file..."
     echo "username=$username" > $config_file
     echo "Configuration saved!"
 }
 
-check_username () {
-    config_file="config.txt"
-
-
+check_username() {
     if [[ -f $config_file ]]; then
-
         source $config_file
         if [[ -n $username ]]; then
             echo "Username is configured: $username"
             git_init_configured
+
         else
             echo "Username is not configured."
-            git_init_configuregit_init_configure
+            configuration_mode
         fi
     else
         echo "Configuration file not found. Running default init commands."
@@ -83,8 +81,7 @@ check_username () {
     fi
 }
 
-
-
+# Process command-line arguments
 if [[ -n $1 ]]; then
     case $1 in
     "-c")
@@ -98,7 +95,6 @@ if [[ -n $1 ]]; then
     "--config")
         echo -e "\033[0;32m ###### Entering configuration mode ##### \033[0m"
         configuration_mode
-        create_config_file
     ;;
     *)
         echo "Unknown option"
